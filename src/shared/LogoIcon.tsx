@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function LogoIcon({ className = "w-9 h-9" }) {
+interface LogoIconProps {
+    className?: string;
+}
+
+export default function LogoIcon({ className = "w-9 h-9" }: LogoIconProps) {
     return (
         <svg
             viewBox="0 0 36 36"

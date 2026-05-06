@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Amiri } from "next/font/google";
 import "./globals.css";
+import ClientWrapper from "@/components/ClientWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,7 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${amiri.variable} antialiased`}>
-        {children}
+        <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>
   );

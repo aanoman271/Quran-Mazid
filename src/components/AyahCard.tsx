@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useQuran } from "@/store/useQuran";
 
 interface AyahCardProps {
   number: string;
@@ -9,29 +10,57 @@ interface AyahCardProps {
 }
 
 const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
+  const { arabicSize, translationSize } = useQuran();
+
   return (
-    <article className="bg-surface-container rounded-xl p-6 space-y-4 hover:ring-1 hover:ring-primary/20 transition">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="text-xs bg-surface-container-high text-on-surface-variant px-2 py-1 rounded">
+    <article className="bg-surface-container-low rounded-2xl p-6 md:p-8 border border-outline-variant/10 hover:border-primary/20 transition-all duration-300 group">
+      <div className="flex gap-8">
+        {/* Left Actions Column */}
+        <div className="flex flex-col items-center gap-6 pt-2">
+          <div className="text-primary font-bold text-sm tracking-tighter">
             {number}
           </div>
-          <span className="material-symbols-outlined cursor-pointer text-on-surface-variant hover:text-primary transition">
-            play_circle
-          </span>
-          <span className="material-symbols-outlined cursor-pointer text-on-surface-variant hover:text-primary transition">
-            bookmark
-          </span>
+          <div className="flex flex-col gap-4 text-on-surface-variant/60">
+            <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
+              play_arrow
+            </button>
+            <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
+              menu_book
+            </button>
+            <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
+              bookmark
+            </button>
+            <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
+              more_horiz
+            </button>
+          </div>
+        </div>
+
+        {/* Right Content Column */}
+        <div className="flex-1 space-y-8">
+          <p 
+            className="text-right font-quran text-on-surface dir-rtl"
+            style={{ 
+              fontSize: `${arabicSize}px`,
+              lineHeight: `${arabicSize * 1.8}px`
+            }}
+          >
+            {arabic}
+          </p>
+
+          <div className="space-y-3">
+            <p className="text-[10px] font-bold text-on-surface-variant/40 tracking-widest uppercase">
+              SAHEEH INTERNATIONAL
+            </p>
+            <p 
+              className="text-on-surface-variant/90 leading-relaxed"
+              style={{ fontSize: `${translationSize}px` }}
+            >
+              {translation}
+            </p>
+          </div>
         </div>
       </div>
-
-      <p className="text-right text-2xl md:text-3xl leading-loose font-quran text-on-surface">
-        {arabic}
-      </p>
-
-      <p className="text-sm text-on-surface-variant border-t border-outline-variant pt-2">
-        {translation}
-      </p>
     </article>
   );
 };
