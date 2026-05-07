@@ -235,14 +235,14 @@ const SettingsSidebar: React.FC<SettingsSidebarProps> = ({ isOpen, onClose }) =>
         </div>
 
         {/* Bottom Action Area */}
-        <div className="p-6 border-t border-outline-variant/10 bg-surface-container-low/80 backdrop-blur-sm">
+        {/* <div className="p-6 border-t border-outline-variant/10 bg-surface-container-low/80 backdrop-blur-sm">
           <button
             onClick={onClose}
             className="w-full py-4 bg-primary text-on-primary rounded-2xl font-bold text-sm shadow-xl shadow-primary/20 hover:shadow-primary/30 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300"
           >
             Save Preferences
           </button>
-        </div>
+        </div> */}
       </aside>
     </>
   );

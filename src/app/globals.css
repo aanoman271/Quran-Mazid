@@ -2,8 +2,11 @@
 @plugin "daisyui";
 @config "../../tailwind.config.ts";
 
+/* Tailwind v4 এ ডার্ক মোড ভেরিয়েন্ট নিশ্চিত করা */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  /* Design Tokens (RGB Format for Opacity Support) */
+  /* Design Tokens (RGB Format) */
   --surface: 249 249 255;
   --surface-dim: 207 218 242;
   --surface-bright: 249 249 255;
@@ -29,131 +32,73 @@
 
   --secondary: 86 94 116;
   --on-secondary: 255 255 255;
-  --secondary-container: 218 226 253;
-  --on-secondary-container: 92 100 122;
-
-  --tertiary: 164 58 58;
-  --on-tertiary: 255 255 255;
-  --tertiary-container: 252 124 120;
-  --on-tertiary-container: 113 20 25;
-
-  --error: 186 26 26;
-  --on-error: 255 255 255;
-  --error-container: 255 218 214;
-  --on-error-container: 147 0 10;
 
   --background: 249 249 255;
   --on-background: 17 28 45;
-
-  /* DaisyUI System Variables */
-  --p: rgb(var(--primary));
-  --pc: rgb(var(--on-primary));
-  --s: rgb(var(--secondary));
-  --sc: rgb(var(--on-secondary));
-  --t: var(--tertiary);
-  --tc: var(--on-tertiary);
-  --n: rgb(var(--surface-container));
-  --nc: rgb(var(--on-surface));
-  --b1: rgb(var(--background));
-  --b2: rgb(var(--surface-container-low));
-  --b3: rgb(var(--surface-container-high));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Spiritual Dark Mode (RGB) */
-    --surface: 10 12 11;
-    --surface-dim: 10 12 11;
-    --surface-bright: 28 33 30;
-    --surface-container-lowest: 5 6 5;
-    --surface-container-low: 17 20 18;
-    --surface-container: 21 25 22;
-    --surface-container-high: 30 36 32;
-    --surface-container-highest: 40 47 42;
+.dark {
+  --surface: 10 12 11;
+  --surface-dim: 10 12 11;
+  --surface-bright: 28 33 30;
+  --surface-container-lowest: 5 6 5;
+  --surface-container-low: 17 20 18;
+  --surface-container: 21 25 22;
+  --surface-container-high: 30 36 32;
+  --surface-container-highest: 40 47 42;
 
-    --on-surface: 240 244 241;
-    --on-surface-variant: 160 173 163;
-    --inverse-surface: 240 244 241;
-    --inverse-on-surface: 26 30 27;
+  --on-surface: 240 244 241;
+  --on-surface-variant: 160 173 163;
+  --inverse-surface: 240 244 241;
+  --inverse-on-surface: 26 30 27;
 
-    --outline: 124 137 127;
-    --outline-variant: 60 74 66;
+  --outline: 124 137 127;
+  --outline-variant: 60 74 66;
 
-    --primary: 66 128 56;
-    --on-primary: 255 255 255;
-    --primary-container: 6 78 59;
-    --on-primary-container: 52 211 153;
-    --inverse-primary: 16 185 129;
+  --primary: 66 128 56;
+  --on-primary: 255 255 255;
+  --primary-container: 6 78 59;
+  --on-primary-container: 52 211 153;
+  --inverse-primary: 16 185 129;
 
-    --secondary: 139 150 141;
-    --on-secondary: 10 12 11;
-    --secondary-container: 61 69 63;
-    --on-secondary-container: 220 229 221;
-
-    --background: 10 12 11;
-    --on-background: 240 244 241;
-  }
+  --background: 10 12 11;
+  --on-background: 240 244 241;
 }
 
 @theme {
-  /* Typography Fonts */
+  /* Colors mapping - এর ফলে bg-primary বা text-surface কাজ করবে */
+  --color-primary: rgb(var(--primary));
+  --color-on-primary: rgb(var(--on-primary));
+  --color-surface: rgb(var(--surface));
+  --color-on-surface: rgb(var(--on-surface));
+  --color-on-surface-variant: rgb(var(--on-surface-variant));
+  --color-background: rgb(var(--background));
+  --color-on-background: rgb(var(--on-background));
+  --color-outline-variant: rgb(var(--outline-variant));
+  --color-surface-container-high: rgb(var(--surface-container-high));
+
+  /* Fonts */
   --font-inter: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-amiri: "Amiri", serif;
-  --font-scheherazade: "Scheherazade New", serif;
-  --font-quran: "KFGQPC Uthman Taha Naskh", serif;
+  --font-amiri: var(--font-amiri), serif;
+  --font-scheherazade: var(--font-scheherazade), serif;
 
-  /* Typography Styles */
-  --text-headline-lg: 1.5rem;
-  --text-headline-lg--line-height: 2rem;
-  --text-headline-lg--font-weight: 700;
-
+  /* Typography */
   --text-headline-md: 1.25rem;
   --text-headline-md--line-height: 1.75rem;
   --text-headline-md--font-weight: 600;
-
-  --text-arabic-display: 2.25rem;
-  --text-arabic-display--line-height: 4rem;
-
-  --text-arabic-reading: 1.75rem;
-  --text-arabic-reading--line-height: 3.5rem;
-
-  --text-body-reading: 1.125rem;
-  --text-body-reading--line-height: 1.75rem;
-
-  --text-body-ui: 0.875rem;
-  --text-body-ui--line-height: 1.25rem;
-
-  --text-label-caps: 0.75rem;
-  --text-label-caps--line-height: 1rem;
-  --text-label-caps--font-weight: 600;
-  --text-label-caps--letter-spacing: 0.05em;
-
-  --text-nav-item: 0.8125rem;
-  --text-nav-item--line-height: 1.125rem;
-  --text-nav-item--font-weight: 500;
-
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-
-  /* Rounded */
-  --radius-sm: 0.125rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
 }
 
-body {
-  background: rgb(var(--background));
-  color: rgb(var(--on-background));
-  font-family: var(--font-inter);
+/* Base styles */
+@layer base {
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--on-background));
+    font-family: var(--font-inter);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
 
+/* Custom Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }

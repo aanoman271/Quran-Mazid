@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
-import { Inter, Amiri, Scheherazade_New } from "next/font/google";
+import {
+  Inter,
+  Amiri,
+  Scheherazade_New,
+} from "next/font/google";
+
 import "./globals.css";
+
 import ClientWrapper from "@/components/ClientWrapper";
+import ThemeInitializer from "@/components/ThemeInitializer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,17 +38,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} ${amiri.variable} ${scheherazade.variable} antialiased`}>
-        <ClientWrapper>{children}</ClientWrapper>
+
+      <body
+        className={`
+          ${inter.variable}
+          ${amiri.variable}
+          ${scheherazade.variable}
+          antialiased
+        `}
+      >
+        <ThemeInitializer />
+
+        <ClientWrapper>
+          {children}
+        </ClientWrapper>
       </body>
     </html>
   );
 }
-

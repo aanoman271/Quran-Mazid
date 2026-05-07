@@ -2,12 +2,14 @@
 
 import { useQuran } from "@/store/useQuran";
 import { useSearch } from "@/store/useSearch";
+import { useThemeStore } from "@/store/useThemeStore";
 import React, { useState, useEffect, useRef } from "react";
 
 interface IconBtnProps {
   icon: string;
   onClick?: () => void;
 }
+
 
 const IconBtn: React.FC<IconBtnProps> = ({ icon, onClick }) => {
   return (
@@ -38,7 +40,8 @@ const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
   useEffect(() => {
     setInputValue(searchQuery);
   }, [searchQuery]);
-
+  const toggleTheme = useThemeStore((s) => s.toggleTheme);
+  const theme = useThemeStore((s) => s.theme);
   return (
     <header className="grid grid-cols-[320px_1fr] border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
       {/* Column 1: Branding (Aligned with SurahList) */}
@@ -67,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
                     placeholder="Search ayah..."
                     className="bg-transparent border-none outline-none text-xs w-32 md:w-48 text-on-surface placeholder:text-on-surface-variant/30"
                   />
-                  <button 
+                  <button
                     onClick={() => {
                       setIsSearchOpen(false);
                       setInputValue("");
@@ -82,7 +85,11 @@ const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
                 <IconBtn icon="search" onClick={() => setIsSearchOpen(true)} />
               )}
             </div>
-            <IconBtn icon="dark_mode" />
+
+            <IconBtn
+              icon={theme === "dark" ? "light_mode" : "dark_mode"}
+              onClick={toggleTheme}
+            />
             <IconBtn icon="settings" onClick={onSettingsClick} />
           </div>
 

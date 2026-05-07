@@ -42,9 +42,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onSettingsClick }) => {
 
         <nav className="flex flex-col gap-6 items-center w-full">
           <NavItem icon="menu_book" label="Read" active />
-          <NavItem icon="format_list_bulleted" label="Surahs" />
+          {/* <NavItem icon="format_list_bulleted" label="Surahs" />
           <NavItem icon="bookmark" label="Bookmarks" />
-          <NavItem icon="search" label="Search" />
+          <NavItem icon="search" label="Search" /> */}
         </nav>
 
         <div className="mt-auto pb-6 w-full">
