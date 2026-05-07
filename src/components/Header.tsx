@@ -1,6 +1,8 @@
 "use client";
 
 import { useQuran } from "@/store/useQuran";
+import { useSearch } from "@/store/useSearch";
+import React, { useState, useEffect, useRef } from "react";
 
 interface IconBtnProps {
   icon: string;
@@ -21,7 +23,21 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
   const { selectedSurah, surahs } = useQuran();
+  const { searchQuery, setSearchQuery, isSearchOpen, setIsSearchOpen } = useSearch();
+  const [inputValue, setInputValue] = useState(searchQuery);
   const currentSurah = surahs.find((s) => s.number === selectedSurah);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSearchQuery(inputValue);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [inputValue, setSearchQuery]);
+
+  // Sync internal state if search is reset externally
+  useEffect(() => {
+    setInputValue(searchQuery);
+  }, [searchQuery]);
 
   return (
     <header className="grid grid-cols-[320px_1fr] border-b border-outline-variant/30 bg-surface/80 backdrop-blur-md">
@@ -39,7 +55,33 @@ const Header: React.FC<HeaderProps> = ({ onSettingsClick }) => {
 
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-4 pr-6 border-r border-outline-variant/20">
-            <IconBtn icon="search" />
+            <div className="flex items-center">
+              {isSearchOpen ? (
+                <div className="flex items-center bg-surface-container-high rounded-full px-3 py-1 animate-in fade-in zoom-in duration-200">
+                  <span className="material-symbols-outlined text-sm text-on-surface-variant/50 mr-2">search</span>
+                  <input
+                    autoFocus
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Search ayah..."
+                    className="bg-transparent border-none outline-none text-xs w-32 md:w-48 text-on-surface placeholder:text-on-surface-variant/30"
+                  />
+                  <button 
+                    onClick={() => {
+                      setIsSearchOpen(false);
+                      setInputValue("");
+                      setSearchQuery("");
+                    }}
+                    className="material-symbols-outlined text-sm text-on-surface-variant/50 hover:text-error transition-colors ml-2"
+                  >
+                    close
+                  </button>
+                </div>
+              ) : (
+                <IconBtn icon="search" onClick={() => setIsSearchOpen(true)} />
+              )}
+            </div>
             <IconBtn icon="dark_mode" />
             <IconBtn icon="settings" onClick={onSettingsClick} />
           </div>

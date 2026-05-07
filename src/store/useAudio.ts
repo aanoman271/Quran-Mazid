@@ -59,8 +59,14 @@ export const useAudio = create<AudioState>((set, get) => ({
     });
 
     audio.play().catch((error) => {
+      // The play() request was interrupted by a call to pause().
+      // This is expected when switching ayahs quickly or toggling stop.
+      if (error.name === "AbortError") return;
+
       console.error("Failed to play audio:", error);
-      set({ isPlaying: false, currentAyahKey: null, audioInstance: null });
+      if (get().audioInstance === audio) {
+        set({ isPlaying: false, currentAyahKey: null, audioInstance: null });
+      }
     });
   },
 

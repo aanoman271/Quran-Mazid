@@ -5,19 +5,36 @@ import SurahList from "@/components/SurahList";
 import Header from "@/components/Header";
 import AyahCard from "@/components/AyahCard";
 import { useQuran } from "@/store/useQuran";
+import { useSearch } from "@/store/useSearch";
 import { fetchVerses } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import SettingsSidebar from "@/components/SettingsSidebar";
 import Image from "next/image";
 import masjid from "@/assets/madinah.webp";
 import bismillah from "@/assets/bismillah.svg";
+import { useMemo } from "react";
 
 export default function Home() {
   const { selectedSurah } = useQuran();
+  const { searchQuery, setFilteredResults } = useSearch();
   const [verses, setVerses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [surahDetail, setSurahDetail] = useState<any>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  const filteredVerses = useMemo(() => {
+    if (!searchQuery) return verses;
+    const lowerQuery = searchQuery.toLowerCase();
+    return verses.filter((ayah) => 
+      ayah.arabic.includes(searchQuery) || 
+      ayah.translation.toLowerCase().includes(lowerQuery)
+    );
+  }, [verses, searchQuery]);
+
+  // Sync results to store for potential external use as requested
+  useEffect(() => {
+    setFilteredResults(filteredVerses);
+  }, [filteredVerses, setFilteredResults]);
 
   useEffect(() => {
     setLoading(true);
@@ -92,15 +109,22 @@ export default function Home() {
                   <span className="loading loading-spinner loading-lg text-primary"></span>
                   <p className="text-on-surface-variant animate-pulse font-medium">Loading verses...</p>
                 </div>
-              ) : (
-                verses.map((ayah, i) => (
+              ) : filteredVerses.length > 0 ? (
+                filteredVerses.map((ayah) => (
                   <AyahCard
-                    key={i}
+                    key={ayah.number}
                     number={ayah.number}
                     arabic={ayah.arabic}
                     translation={ayah.translation}
+                    searchQuery={searchQuery}
                   />
                 ))
+              ) : (
+                <div className="flex flex-col items-center justify-center py-20 text-center opacity-60">
+                  <span className="material-symbols-outlined text-6xl mb-4 text-on-surface-variant/30">search_off</span>
+                  <h3 className="text-lg font-bold">No matches found</h3>
+                  <p className="text-sm">Try searching for different keywords or text.</p>
+                </div>
               )}
             </div>
 

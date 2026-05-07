@@ -8,9 +8,10 @@ interface AyahCardProps {
   number: string;
   arabic: string;
   translation: string;
+  searchQuery?: string;
 }
 
-const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
+const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation, searchQuery }) => {
   const { arabicSize, translationSize, arabicFont } = useQuran();
   const { currentAyahKey, isPlaying, playAyah } = useAudio();
 
@@ -21,6 +22,25 @@ const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
     : "font-quran";
 
   const isCurrentPlaying = currentAyahKey === number && isPlaying;
+
+  const highlightText = (text: string, query: string) => {
+    if (!query) return text;
+    // Escape special regex characters to prevent crashes
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const parts = text.split(new RegExp(`(${escapedQuery})`, "gi"));
+    return parts.map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <mark
+          key={i}
+          className="bg-primary/20 text-primary rounded-sm px-0.5 border-b border-primary/40 transition-colors"
+        >
+          {part}
+        </mark>
+      ) : (
+        part
+      )
+    );
+  };
 
   const handlePlayClick = () => {
     const [surah, ayah] = number.split(":").map(Number);
@@ -65,7 +85,7 @@ const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
               lineHeight: `${arabicSize * 1.8}px`
             }}
           >
-            {arabic}
+            {highlightText(arabic, searchQuery || "")}
           </p>
 
           <div className="space-y-3">
@@ -76,7 +96,7 @@ const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
               className="text-on-surface-variant/90 leading-relaxed"
               style={{ fontSize: `${translationSize}px` }}
             >
-              {translation}
+              {highlightText(translation, searchQuery || "")}
             </p>
           </div>
         </div>
