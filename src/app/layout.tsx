@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Amiri } from "next/font/google";
+import { Inter, Amiri, Scheherazade_New } from "next/font/google";
 import "./globals.css";
 import ClientWrapper from "@/components/ClientWrapper";
 
@@ -10,6 +10,12 @@ const inter = Inter({
 
 const amiri = Amiri({
   variable: "--font-amiri",
+  weight: ["400", "700"],
+  subsets: ["arabic"],
+});
+
+const scheherazade = Scheherazade_New({
+  variable: "--font-scheherazade",
   weight: ["400", "700"],
   subsets: ["arabic"],
 });
@@ -32,7 +38,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} ${amiri.variable} antialiased`}>
+      <body className={`${inter.variable} ${amiri.variable} ${scheherazade.variable} antialiased`}>
         <ClientWrapper>{children}</ClientWrapper>
       </body>
     </html>

@@ -7,10 +7,12 @@ interface QuranState {
   surahs: Surah[];
   arabicSize: number;
   translationSize: number;
+  arabicFont: string;
   setSelectedSurah: (id: number) => void;
   setSurahs: (surahs: Surah[]) => void;
   setArabicSize: (size: number) => void;
   setTranslationSize: (size: number) => void;
+  setArabicFont: (font: string) => void;
 }
 
 export const useQuran = create<QuranState>()(
@@ -20,17 +22,20 @@ export const useQuran = create<QuranState>()(
       surahs: [],
       arabicSize: 38,
       translationSize: 16,
+      arabicFont: "KFGQPC Uthman Taha Naskh",
       setSelectedSurah: (id) => set({ selectedSurah: id }),
       setSurahs: (surahs) => set({ surahs }),
       setArabicSize: (size) => set({ arabicSize: size }),
       setTranslationSize: (size) => set({ translationSize: size }),
+      setArabicFont: (font) => set({ arabicFont: font }),
     }),
     {
       name: "quran-settings",
       partialize: (state) => ({ 
         selectedSurah: state.selectedSurah, 
         arabicSize: state.arabicSize, 
-        translationSize: state.translationSize 
+        translationSize: state.translationSize,
+        arabicFont: state.arabicFont,
       }),
     }
   )

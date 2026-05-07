@@ -98,8 +98,9 @@
 @theme {
   /* Typography Fonts */
   --font-inter: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-amiri: var(--font-amiri), serif;
-  --font-quran: "KFGQPC Uthman Taha Naskh", "Amiri", serif;
+  --font-amiri: "Amiri", serif;
+  --font-scheherazade: "Scheherazade New", serif;
+  --font-quran: "KFGQPC Uthman Taha Naskh", serif;
 
   /* Typography Styles */
   --text-headline-lg: 1.5rem;

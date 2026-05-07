@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useQuran } from "@/store/useQuran";
+import { useAudio } from "@/store/useAudio";
 
 interface AyahCardProps {
   number: string;
@@ -10,7 +11,21 @@ interface AyahCardProps {
 }
 
 const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
-  const { arabicSize, translationSize } = useQuran();
+  const { arabicSize, translationSize, arabicFont } = useQuran();
+  const { currentAyahKey, isPlaying, playAyah } = useAudio();
+
+  const fontClass = arabicFont === "Amiri" 
+    ? "font-amiri" 
+    : arabicFont === "Scheherazade New" 
+    ? "font-scheherazade" 
+    : "font-quran";
+
+  const isCurrentPlaying = currentAyahKey === number && isPlaying;
+
+  const handlePlayClick = () => {
+    const [surah, ayah] = number.split(":").map(Number);
+    playAyah(surah, ayah);
+  };
 
   return (
     <article className="bg-surface-container-low rounded-2xl p-6 md:p-8 border border-outline-variant/10 hover:border-primary/20 transition-all duration-300 group">
@@ -21,8 +36,13 @@ const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
             {number}
           </div>
           <div className="flex flex-col gap-4 text-on-surface-variant/60">
-            <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
-              play_arrow
+            <button 
+              onClick={handlePlayClick}
+              className={`material-symbols-outlined hover:text-primary transition-colors cursor-pointer ${
+                isCurrentPlaying ? "text-primary fill-1" : ""
+              }`}
+            >
+              {isCurrentPlaying ? "stop" : "play_arrow"}
             </button>
             <button className="material-symbols-outlined hover:text-primary transition-colors cursor-pointer">
               menu_book
@@ -39,7 +59,7 @@ const AyahCard: React.FC<AyahCardProps> = ({ number, arabic, translation }) => {
         {/* Right Content Column */}
         <div className="flex-1 space-y-8">
           <p 
-            className="text-right font-quran text-on-surface dir-rtl"
+            className={`text-right ${fontClass} text-on-surface dir-rtl`}
             style={{ 
               fontSize: `${arabicSize}px`,
               lineHeight: `${arabicSize * 1.8}px`
