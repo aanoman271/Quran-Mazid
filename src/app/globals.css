@@ -1,81 +1,175 @@
 @import "tailwindcss";
 @plugin "daisyui";
-@config "../../tailwind.config.ts";
+/* @config "../../tailwind.config.ts"; */
 
-/* Tailwind v4 এ ডার্ক মোড ভেরিয়েন্ট নিশ্চিত করা */
+/* Dark mode variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Design Tokens (RGB Format) */
-  --surface: 249 249 255;
-  --surface-dim: 207 218 242;
-  --surface-bright: 249 249 255;
+  /* =========================
+     Quran Mazid Inspired Tokens
+     ========================= */
+
+  /* Base Backgrounds */
+  --background: 248 250 252;
+  --on-background: 15 23 42;
+
+  --surface: 255 255 255;
+  --surface-dim: 241 245 249;
+  --surface-bright: 255 255 255;
+
+  /* Layered Surfaces */
   --surface-container-lowest: 255 255 255;
-  --surface-container-low: 240 243 255;
-  --surface-container: 231 238 255;
-  --surface-container-high: 222 232 255;
-  --surface-container-highest: 216 227 251;
+  --surface-container-low: 248 250 252;
+  --surface-container: 241 245 249;
+  --surface-container-high: 226 232 240;
+  --surface-container-highest: 203 213 225;
 
-  --on-surface: 17 28 45;
-  --on-surface-variant: 60 74 66;
-  --inverse-surface: 38 49 67;
-  --inverse-on-surface: 236 241 255;
+  /* Text */
+  --on-surface: 15 23 42;
+  --on-surface-variant: 100 116 139;
 
-  --outline: 108 122 113;
-  --outline-variant: 187 202 191;
+  --inverse-surface: 15 23 42;
+  --inverse-on-surface: 248 250 252;
 
-  --primary: 0 108 73;
-  --on-primary: 255 255 255;
-  --primary-container: 16 185 129;
-  --on-primary-container: 0 66 43;
-  --inverse-primary: 78 222 163;
+  /* Borders */
+  --outline: 148 163 184;
+  --outline-variant: 226 232 240;
 
-  --secondary: 86 94 116;
+  /* Primary Green */
+  --primary: 74 222 128;
+  --on-primary: 5 15 8;
+
+  --primary-container: 220 252 231;
+  --on-primary-container: 22 101 52;
+
+  --inverse-primary: 34 197 94;
+
+  /* Secondary */
+  --secondary: 51 65 85;
   --on-secondary: 255 255 255;
 
-  --background: 249 249 255;
-  --on-background: 17 28 45;
+  /* Accent */
+  --accent: 16 185 129;
+  --on-accent: 255 255 255;
+
+  /* Special Quran UI */
+  --sidebar-bg: 255 255 255;
+  --sidebar-hover: 240 253 244;
+  --active-card: 220 252 231;
+
+  --arabic-text: 17 24 39;
+  --translation-text: 71 85 105;
+
+  --divider: 226 232 240;
+
+  /* Shadows */
+  --shadow-color: 15 23 42;
 }
 
 .dark {
-  --surface: 10 12 11;
-  --surface-dim: 10 12 11;
-  --surface-bright: 28 33 30;
-  --surface-container-lowest: 5 6 5;
-  --surface-container-low: 17 20 18;
-  --surface-container: 21 25 22;
-  --surface-container-high: 30 36 32;
-  --surface-container-highest: 40 47 42;
+  /* =========================
+     Quran Mazid Dark Theme
+     ========================= */
 
-  --on-surface: 240 244 241;
-  --on-surface-variant: 160 173 163;
-  --inverse-surface: 240 244 241;
-  --inverse-on-surface: 26 30 27;
-
-  --outline: 124 137 127;
-  --outline-variant: 60 74 66;
-
-  --primary: 66 128 56;
-  --on-primary: 255 255 255;
-  --primary-container: 6 78 59;
-  --on-primary-container: 52 211 153;
-  --inverse-primary: 16 185 129;
-
-  --background: 10 12 11;
+  /* Main Background */
+  --background: 3 7 5;
   --on-background: 240 244 241;
+
+  /* Core surfaces */
+  --surface: 7 10 8;
+  --surface-dim: 5 7 6;
+  --surface-bright: 20 25 22;
+
+  /* Layered cards/panels */
+  --surface-container-lowest: 0 0 0;
+  --surface-container-low: 10 14 12;
+  --surface-container: 15 19 17;
+  --surface-container-high: 22 27 24;
+  --surface-container-highest: 30 36 32;
+
+  /* Text */
+  --on-surface: 236 240 237;
+  --on-surface-variant: 148 163 154;
+
+  --inverse-surface: 236 240 237;
+  --inverse-on-surface: 10 14 12;
+
+  /* Borders */
+  --outline: 60 72 65;
+  --outline-variant: 30 41 36;
+
+  /* Quran Mazid green */
+  --primary: 101 163 74;
+  --on-primary: 255 255 255;
+
+  --primary-container: 22 101 52;
+  --on-primary-container: 187 247 208;
+
+  --inverse-primary: 74 222 128;
+
+  /* Secondary */
+  --secondary: 71 85 105;
+  --on-secondary: 255 255 255;
+
+  /* Accent */
+  --accent: 34 197 94;
+  --on-accent: 255 255 255;
+
+  /* Quran UI specific */
+  --sidebar-bg: 9 11 10;
+  --sidebar-hover: 16 24 18;
+  --active-card: 13 30 19;
+
+  --arabic-text: 244 244 245;
+  --translation-text: 161 161 170;
+
+  --divider: 24 29 26;
+
+  /* Glow */
+  --shadow-color: 74 222 128;
 }
 
 @theme {
-  /* Colors mapping - এর ফলে bg-primary বা text-surface কাজ করবে */
+  /* =========================
+     Color mappings
+     ========================= */
+
   --color-primary: rgb(var(--primary));
   --color-on-primary: rgb(var(--on-primary));
-  --color-surface: rgb(var(--surface));
-  --color-on-surface: rgb(var(--on-surface));
-  --color-on-surface-variant: rgb(var(--on-surface-variant));
+  --color-secondary: rgb(var(--secondary));
+  --color-on-secondary: rgb(var(--on-secondary));
+
+  --color-accent: rgb(var(--accent));
+  --color-on-accent: rgb(var(--on-accent));
+
   --color-background: rgb(var(--background));
   --color-on-background: rgb(var(--on-background));
-  --color-outline-variant: rgb(var(--outline-variant));
+
+  --color-surface: rgb(var(--surface));
+  --color-surface-dim: rgb(var(--surface-dim));
+  --color-surface-bright: rgb(var(--surface-bright));
+
+  --color-surface-container-low: rgb(var(--surface-container-low));
+  --color-surface-container: rgb(var(--surface-container));
   --color-surface-container-high: rgb(var(--surface-container-high));
+  --color-surface-container-highest: rgb(var(--surface-container-highest));
+
+  --color-on-surface: rgb(var(--on-surface));
+  --color-on-surface-variant: rgb(var(--on-surface-variant));
+
+  --color-outline: rgb(var(--outline));
+  --color-outline-variant: rgb(var(--outline-variant));
+
+  /* Quran specific */
+  --color-sidebar-bg: rgb(var(--sidebar-bg));
+  --color-sidebar-hover: rgb(var(--sidebar-hover));
+  --color-active-card: rgb(var(--active-card));
+
+  --color-arabic-text: rgb(var(--arabic-text));
+  --color-translation-text: rgb(var(--translation-text));
+
+  --color-divider: rgb(var(--divider));
 
   /* Fonts */
   --font-inter: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -83,22 +177,99 @@
   --font-scheherazade: var(--font-scheherazade), serif;
 
   /* Typography */
+  --text-headline-lg: 2rem;
+  --text-headline-lg--line-height: 2.5rem;
+  --text-headline-lg--font-weight: 700;
+
   --text-headline-md: 1.25rem;
   --text-headline-md--line-height: 1.75rem;
   --text-headline-md--font-weight: 600;
+
+  --text-body-lg: 1rem;
+  --text-body-lg--line-height: 1.75rem;
+
+  /* Radius */
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-soft:
+    0 1px 2px rgb(var(--shadow-color) / 0.04),
+    0 4px 12px rgb(var(--shadow-color) / 0.06);
 }
 
-/* Base styles */
+/* =========================
+   Base
+   ========================= */
+
 @layer base {
+  * {
+    border-color: rgb(var(--outline-variant));
+  }
+
   body {
     background-color: rgb(var(--background));
     color: rgb(var(--on-background));
     font-family: var(--font-inter);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
   }
 }
 
-/* Custom Scrollbar */
+/* =========================
+   Reusable Components
+   ========================= */
+
+@layer components {
+  .quran-card {
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--outline-variant));
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .sidebar-item {
+    background: transparent;
+    border: 1px solid rgb(var(--outline-variant));
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-item:hover {
+    background: rgb(var(--sidebar-hover));
+    border-color: rgb(var(--primary) / 0.3);
+  }
+
+  .sidebar-item-active {
+    background: rgb(var(--active-card));
+    border-color: rgb(var(--primary) / 0.35);
+  }
+
+  .ayah-divider {
+    border-color: rgb(var(--divider));
+  }
+
+  .arabic-text {
+    font-family: var(--font-scheherazade);
+    color: rgb(var(--arabic-text));
+    line-height: 2.3;
+  }
+
+  .translation-text {
+    color: rgb(var(--translation-text));
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: rgb(var(--surface) / 0.72);
+  }
+}
+
+/* =========================
+   Scrollbar
+   ========================= */
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
 }
@@ -108,10 +279,18 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgb(var(--outline-variant) / 0.5);
-  border-radius: 10px;
+  background: rgb(var(--outline) / 0.45);
+  border-radius: 999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--primary) / 0.5);
+  background: rgb(var(--primary) / 0.7);
 }
+/* @layer base {
+  .text-primary {
+    color: rgb(var(--primary)) !important;
+  }
+  .bg-primary {
+    background-color: rgb(var(--primary)) !important;
+  }
+} */

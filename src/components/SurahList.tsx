@@ -17,7 +17,7 @@ function highlightMatch(text: string, query: string) {
       </mark>
     ) : (
       part
-    )
+    ),
   );
 }
 
@@ -38,8 +38,7 @@ const SurahCard: React.FC<SurahCardProps> = ({
   name,
   arabic,
   active,
-  type,
-  ayahs,
+
   englishNameTranslation,
   onClick,
 }) => {
@@ -79,7 +78,17 @@ const SurahCard: React.FC<SurahCardProps> = ({
 };
 
 // ─── SurahList ───────────────────────────────────────────────────────────────
-const SurahList: React.FC = () => {
+interface SurahListProps {
+  isMobileDrawer?: boolean;
+  onItemClick?: () => void;
+  onClose?: () => void;
+}
+
+const SurahList: React.FC<SurahListProps> = ({
+  isMobileDrawer,
+  onItemClick,
+  onClose,
+}) => {
   const [loading, setLoading] = useState(true);
   const { selectedSurah, setSelectedSurah, surahs, setSurahs } = useQuran();
   const { searchQuery, setSearchQuery } = useSurahSearch();
@@ -114,18 +123,21 @@ const SurahList: React.FC = () => {
       const en = s.englishName?.toLowerCase() ?? "";
       const ar = s.name ?? ""; // Arabic – match as-is
       return (
-        en.includes(q) ||
-        ar.includes(searchQuery) // Arabic substring match (no toLowerCase needed)
+        en.includes(q) || ar.includes(searchQuery) // Arabic substring match (no toLowerCase needed)
       );
     });
   }, [searchQuery, surahs]);
 
   return (
-    <section className="hidden lg:flex flex-col w-[320px] border-r border-outline-variant bg-surface-container-low h-screen">
+    <section
+      className={`${
+        isMobileDrawer ? "block" : "hidden md:block"
+      } flex-col w-[320px] border-r border-outline-variant bg-surface-container-low h-full`}
+    >
       <div className="p-4 space-y-6">
         {/* Navigation Tabs */}
         <div className="flex bg-surface-container-highest/50 p-1 rounded-xl">
-          <button className="flex-1 py-2 text-sm font-bold rounded-lg bg-surface-container-low text-primary shadow-sm">
+          <button className="flex-1 py-2 text-sm font-bold rounded-lg bg-surface-container-low text-inverse-primary shadow-sm">
             Surah
           </button>
           <button className="flex-1 py-2 text-sm font-medium text-on-surface-variant/60 hover:text-on-surface transition-colors">
@@ -167,7 +179,11 @@ const SurahList: React.FC = () => {
               ayahs={surah.numberOfAyahs}
               active={surah.number === selectedSurah}
               englishNameTranslation={surah.englishNameTranslation}
-              onClick={() => setSelectedSurah(surah.number)}
+              onClick={() => {
+                setSelectedSurah(surah.number);
+                onItemClick?.();
+                onClose?.();
+              }}
             />
           ))
         ) : (

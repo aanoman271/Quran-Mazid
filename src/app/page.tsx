@@ -25,9 +25,10 @@ export default function Home() {
   const filteredVerses = useMemo(() => {
     if (!searchQuery) return verses;
     const lowerQuery = searchQuery.toLowerCase();
-    return verses.filter((ayah) => 
-      ayah.arabic.includes(searchQuery) || 
-      ayah.translation.toLowerCase().includes(lowerQuery)
+    return verses.filter(
+      (ayah) =>
+        ayah.arabic.includes(searchQuery) ||
+        ayah.translation.toLowerCase().includes(lowerQuery),
     );
   }, [verses, searchQuery]);
 
@@ -42,7 +43,7 @@ export default function Home() {
       // data[0] is Arabic, data[1] is English Asad translation
       const arabicVerses = data[0].ayahs;
       const translationVerses = data[1].ayahs;
-      setSurahDetail(data[0])
+      setSurahDetail(data[0]);
       const combined = arabicVerses.map((ayah: any, index: number) => ({
         number: `${selectedSurah}:${ayah.numberInSurah}`,
         arabic: ayah.text,
@@ -56,7 +57,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-[80px_1fr] lg:grid-cols-[80px_320px_1fr] grid-rows-[auto_1fr] h-screen bg-background text-on-surface">
+      <div className="grid grid-cols-1 md:grid-cols-[80px_1fr] lg:grid-cols-[80px_320px_1fr] grid-rows-[auto_1fr] h-screen overflow-hidden bg-background text-on-surface">
         {/* Left Sidebar (Spans both rows) */}
         <div className="row-span-2 hidden md:block">
           <Sidebar onSettingsClick={() => setIsSettingsOpen(true)} />
@@ -79,16 +80,19 @@ export default function Home() {
               <Image
                 src={masjid}
                 alt="Madinah Silhouette"
-                className="w-40 top-0 h-auto opacity-40 brightness-0 invert"
+                className="w-40 text-primary top-0 h-auto  invert"
+                priority
               />
 
               <div className="text-center relative z-10">
                 <h1 className="text-4xl transition-colors font-bold tracking-tight text-inverse-primary">
                   {surahDetail?.englishName}
                 </h1>
+                <div className="text-primary">TEST</div>
                 <div className="mt-3">
-                  <p className="text-secondary font-medium tracking-wide">
-                    Ayah-{surahDetail?.numberOfAyahs} • {surahDetail?.revelationType}
+                  <p className="text-on-surface-variant font-medium tracking-wide">
+                    Ayah-{surahDetail?.numberOfAyahs} •{" "}
+                    {surahDetail?.revelationType}
                   </p>
                 </div>
               </div>
@@ -107,7 +111,9 @@ export default function Home() {
               {loading ? (
                 <div className="flex flex-col items-center gap-6 p-20">
                   <span className="loading loading-spinner loading-lg text-primary"></span>
-                  <p className="text-on-surface-variant animate-pulse font-medium">Loading verses...</p>
+                  <p className="text-on-surface-variant animate-pulse font-medium">
+                    Loading verses...
+                  </p>
                 </div>
               ) : filteredVerses.length > 0 ? (
                 filteredVerses.map((ayah) => (
@@ -121,9 +127,13 @@ export default function Home() {
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-center py-20 text-center opacity-60">
-                  <span className="material-symbols-outlined text-6xl mb-4 text-on-surface-variant/30">search_off</span>
+                  <span className="material-symbols-outlined text-6xl mb-4 text-on-surface-variant/30">
+                    search_off
+                  </span>
                   <h3 className="text-lg font-bold">No matches found</h3>
-                  <p className="text-sm">Try searching for different keywords or text.</p>
+                  <p className="text-sm">
+                    Try searching for different keywords or text.
+                  </p>
                 </div>
               )}
             </div>
@@ -139,8 +149,10 @@ export default function Home() {
       </div>
 
       {/* Settings Sidebar Modal */}
-      <SettingsSidebar isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
+      <SettingsSidebar
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </>
   );
 }
-
